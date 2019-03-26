@@ -15,7 +15,7 @@ module.exports = function (ctx) {
 
     extras: [
       'roboto-font',
-      // 'material-icons' // optional, you are not bound to it
+      // 'material-icons', // optional, you are not bound to it
       // 'ionicons-v4',
       // 'mdi-v3',
       'fontawesome-v5'
@@ -27,6 +27,11 @@ module.exports = function (ctx) {
 
       components: [
         'QBtn',
+        'QBtnToggle',
+        'QCard',
+        'QCardSection',
+        'QCardActions',
+        'QDate',
         'QDialog',
         'QFab',
         'QFabAction',
@@ -38,6 +43,8 @@ module.exports = function (ctx) {
         'QPage',
         'QPageContainer',
         'QPageSticky',
+        'QPopupProxy',
+        'QSeparator',
         'QTab',
         'QTabPanels',
         'QTabPanel',
@@ -47,16 +54,18 @@ module.exports = function (ctx) {
       ],
 
       directives: [
-        'Ripple'
+        'Ripple',
+        'ClosePopup'
       ],
 
       // Quasar plugins
       plugins: [
         'Notify'
-      ]
+      ],
 
       // iconSet: 'ionicons-v4'
-      // lang: 'de' // Quasar language
+      iconSet: 'fontawesome-v5',
+      // lang: 'ru' // Quasar language
     },
 
     supportIE: false,

@@ -2,6 +2,10 @@ export function note_kinds (state) {
   return state.note_kinds
 }
 
+export function note_kinds_array (state) {
+  return Object.entries(state.note_kinds).map((kind) => Object.assign(kind[1], { name: kind[0] }))
+}
+
 export const notes_of_kind = (state) => (kind) => {
   return state.notes.filter(note => note.kind === kind)
 }

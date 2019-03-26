@@ -1,48 +1,60 @@
 <template>
   <q-card>
     <!--<form @submit.prevent="submit_form">-->
-    <q-card-main>
-      <q-field>
-        <q-btn-toggle float-label="Kind" v-model="note.kind" :options="kind_options" flat/>
-      </q-field>
+    <q-card-section>
+      <q-btn-toggle v-model="note.kind" :options="kind_options" flat/>
 
-      <q-field>
-        <q-input v-model="note.artist" type="text" float-label="Artist" autofocus clearable>
-          <!--<q-autocomplete-->
-            <!--@search="search_artist"-->
-          <!--/>-->
-        </q-input>
-      </q-field>
+      <q-input v-model="note.artist" type="text" label="Artist" autofocus clearable>
+        <!--<q-autocomplete-->
+          <!--@search="search_artist"-->
+        <!--/>-->
+      </q-input>
 
-      <q-field>
-        <q-input v-model="note.album" type="text" float-label="Album" clearable/>
-      </q-field>
+      <q-input v-model="note.album" type="text" label="Album" clearable/>
 
-      <q-field v-if="is_download_url_visible">
-        <q-input v-model="note.download_url" type="url" float-label="Download URL" clearable/>
-      </q-field>
+      <q-input
+        v-if="is_download_url_visible"
+        v-model="note.download_url"
+        type="url"
+        label="Download URL"
+        clearable
+      />
 
-      <q-field v-if="is_download_path_visible">
-        <q-input v-model="note.download_path" type="text" float-label="Download path" clearable/>
-      </q-field>
+      <q-input
+        v-if="is_download_path_visible"
+        v-model="note.download_path"
+        type="text"
+        label="Download path"
+        clearable
+      />
 
-      <q-field v-if="is_release_date_visible">
-        <q-datetime
-          v-model="note.release_date"
-          type="date"
-          :first-day-of-week="1"
-          format="DD.MM.YYYY"
-          float-label="Release date"
-          minimal
-        />
-      </q-field>
+      <q-input
+        v-if="is_release_date_visible"
+        v-model="note.release_date"
+        label="Release date"
+        mask="date"
+        :rules="['date']"
+      >
+        <template v-slot:append>
+          <q-icon name="fas fa-calendar" class="cursor-pointer">
+            <q-popup-proxy>
+              <q-date
+                v-model="note.release_date"
+                :first-day-of-week="1"
+                label="Release date"
+              />
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
 
-      <q-field>
-        <q-input v-model="note.details" type="textarea" rows="3" float-label="Details" clearable/>
-      </q-field>
-    </q-card-main>
-    <q-card-separator/>
-    <q-card-actions align="end">
+      <q-input v-model="note.details" type="textarea" rows="3" label="Details" clearable/>
+    </q-card-section>
+
+    <q-separator/>
+
+    <q-card-actions align="right">
+      <q-btn label="Cancel" v-close-popup></q-btn>
       <q-btn label="Save" type="submit" @click="submit_form" color="primary" :loading="is_saving"/>
     </q-card-actions>
     <!--</form>-->
@@ -50,7 +62,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 // import API from 'api/artists'
 
 export default {
@@ -70,11 +82,11 @@ export default {
   },
 
   computed: {
-    ...mapState(['note_kinds']),
+    ...mapGetters(['note_kinds_array']),
 
     kind_options () {
-      if (this.note_kinds) {
-        return this.note_kinds.entries.map(kind => { return { label: kind[1].title, value: kind[0] } })
+      if (this.note_kinds_array) {
+        return this.note_kinds_array.map(kind => { return { label: kind.title, value: kind.name } })
       } else {
         return []
       }
@@ -119,7 +131,4 @@ export default {
 </script>
 
 <style>
-  .q-field {
-    margin-bottom: 1rem;
-  }
 </style>

@@ -5,59 +5,69 @@
       debounce="500"
       type="search"
       placeholder="Search"
-      borderless
-      filled
       class="q-mx-lg q-mt-md"
-    >
-      <template v-slot:append>
-        <q-icon v-if="search === ''" name="fas fa-search" />
-        <q-icon v-else name="clear" class="cursor-pointer" @click="search = ''" />
-      </template>
-    </q-input>
+      clearable
+      clear-icon="fas fa-times"
+      rounded
+      standout
+      dense
+    />
 
     <template v-if="is_searching">
       <notes-list :notes="found_notes"/>
     </template>
 
-    <q-tabs v-else v-model="active_tab" align="justify" inverted no-pane-border>
-      <template v-for="(kind, kind_name, index) in note_kinds">
-        <q-tab
-          slot="title"
-          :key="kind_name"
-          :name="`tab-${kind_name}`"
-          :icon="kind.icon"
-          :color="kind.color"
-          :default="index === 0"
-        />
-      </template>
-    </q-tabs>
+    <template v-else>
+      <q-tabs
+        v-model="active_tab"
+        align="justify"
+        :active-color="active_color"
+        indicator-color="primary"
+        narrow-indicator
+        shrink
+      >
+        <template v-for="kind in note_kinds_array">
+          <q-tab
+            :name="kind.name"
+            :key="kind.name"
+            :icon="kind.icon"
+            :color="kind.color"
+          />
+        </template>
+      </q-tabs>
 
-    <q-tab-panels v-model="active_tab" animated>
-      <template v-for="(kind, kind_name) in note_kinds">
-        <q-tab-panel :name="`tab-${kind_name}`" :key="kind_name">
-          <notes-list :notes="notes_of_kind(kind_name)" @edit-note="edit_note"/>
-        </q-tab-panel>
-      </template>
-    </q-tab-panels>
+      <q-tab-panels v-model="active_tab" animated>
+        <template v-for="kind in note_kinds_array">
+          <q-tab-panel :name="kind.name" :key="kind.name">
+            <notes-list :notes="notes_of_kind(kind.name)" @edit-note="edit_note"/>
+          </q-tab-panel>
+        </template>
+      </q-tab-panels>
+    </template>
 
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-fab icon="fas fa-plus" color="positive" direction="up">
+      <q-fab
+        icon="fas fa-plus"
+        active-icon="fas fa-times"
+        color="positive"
+        direction="up"
+      >
         <template v-for="(kind, kind_name) in note_kinds">
           <q-fab-action @click="add_note(kind_name)" :icon="kind.icon" :color="kind.color" :key="kind_name"/>
         </template>
       </q-fab>
     </q-page-sticky>
 
-    <q-dialog v-model="is_modal_visible" maximized>
-      <q-layout container>
-        <q-toolbar slot="header" :color="form_color">
+    <q-dialog v-model="is_modal_visible" style="width: 700px; max-width: 80vw;" persistent>
+      <q-card>
+        <q-toolbar :class="`bg-${form_color} text-white`">
           <q-btn @click="close_form" flat round dense icon="fas fa-times"/>
           <q-toolbar-title>{{ form_title }}</q-toolbar-title>
         </q-toolbar>
         <div class="layout-padding">
           <note-form :note="active_note" @submit-form="save_note"/>
         </div>
-      </q-layout>
+      </q-card>
     </q-dialog>
   </q-page>
 </template>
@@ -73,7 +83,7 @@ export default {
 
   data () {
     return {
-      active_tab: 0,
+      active_tab: null,
       active_note: {},
       is_modal_visible: false,
       search: ''
@@ -88,10 +98,15 @@ export default {
 
   created () {
     // this.fetch_notes()
+    this.active_tab = this.note_kinds_array[0].name
   },
 
   computed: {
-    ...mapGetters(['notes_of_kind', 'search_notes', 'note_kinds']),
+    ...mapGetters(['notes_of_kind', 'search_notes', 'note_kinds', 'note_kinds_array']),
+
+    active_color () {
+      return this.note_kinds[this.active_tab].color
+    },
 
     is_searching () {
       return this.search !== ''
