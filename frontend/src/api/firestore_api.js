@@ -1,14 +1,6 @@
 import firebase from 'firebase'
 import 'firebase/firestore'
-
-const config = {
-  apiKey: 'AIzaSyAH6IRJ4oGMYIW0lUFWsVEUA4YvGNczhL4',
-  authDomain: 'music-reminder-95b09.firebaseapp.com',
-  databaseURL: 'https://music-reminder-95b09.firebaseio.com',
-  projectId: 'music-reminder-95b09',
-  storageBucket: 'music-reminder-95b09.appspot.com',
-  messagingSenderId: '174101918698'
-}
+import config from './firebase_config'
 
 firebase.initializeApp(config)
 
