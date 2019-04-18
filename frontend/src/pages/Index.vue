@@ -86,7 +86,7 @@ export default {
       active_tab: null,
       active_note: {},
       is_modal_visible: false,
-      search: ''
+      search: null
     }
   },
 
