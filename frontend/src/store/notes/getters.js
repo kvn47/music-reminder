@@ -11,10 +11,14 @@ export const notes_of_kind = (state) => (kind) => {
 }
 
 export const search_notes = (state) => (str) => {
-  return state.notes.filter(note => {
-    return note.artist.toLowerCase().includes(str.toLowerCase()) ||
-      note.album.toLowerCase().includes(str.toLowerCase())
-  })
+  if (str != null) {
+    return state.notes.filter(note => {
+      return note.artist.toLowerCase().includes(str.toLowerCase()) ||
+        note.album.toLowerCase().includes(str.toLowerCase())
+    })
+  } else {
+    return state.notes
+  }
 }
 
 export const next_kind_for = (state) => (kind_name) => {

@@ -33,6 +33,7 @@ module.exports = function (ctx) {
         'QCardActions',
         'QDate',
         'QDialog',
+        'QExpansionItem',
         'QFab',
         'QFabAction',
         'QIcon',

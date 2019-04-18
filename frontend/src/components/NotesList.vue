@@ -1,9 +1,9 @@
 <template>
   <q-list no-border>
     <template v-for="note in notes">
-      <q-collapsible :label="note_label(note)" :key="note.id" collapse-icon="fas fa-angle-down" group="notes" popup>
+      <q-expansion-item :label="note_label(note)" :key="note.id" expand-icon="fas fa-angle-down" group="notes" popup>
         <note-card :note="note"/>
-      </q-collapsible>
+      </q-expansion-item>
     </template>
   </q-list>
 </template>

@@ -97,7 +97,7 @@ export default {
   },
 
   created () {
-    // this.fetch_notes()
+    this.fetch_notes()
     this.active_tab = this.note_kinds_array[0].name
   },
 
@@ -109,7 +109,7 @@ export default {
     },
 
     is_searching () {
-      return this.search !== ''
+      return this.search !== null
     },
 
     found_notes () {

@@ -1,11 +1,11 @@
 <template>
   <q-card flat>
-    <q-card-main>
+    <q-card-section>
       {{note.details}}
-    </q-card-main>
-    <q-card-separator/>
+    </q-card-section>
+    <q-separator/>
     <q-card-actions align="around">
-      <q-btn :icon="next_kind.icon" :color="next_kind.color" @click="advance_note" flat/>
+      <q-btn :icon="next_kind.icon" :color="next_kind.color" @click="advance_note(note)" flat/>
       <q-btn icon="fas fa-edit" color="secondary" @click="edit_note(note)" flat/>
       <q-btn icon="fas fa-trash" color="negative" @click="delete_note(note)" flat/>
     </q-card-actions>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'NoteCard',
@@ -31,8 +31,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['note_kinds']),
-    ...mapGetters(['next_kind_for']),
+    ...mapGetters(['note_kinds', 'next_kind_for']),
 
     next_kind () {
       return this.next_kind_for(this.note.kind)
@@ -40,7 +39,12 @@ export default {
   },
 
   methods: {
-    ...mapActions(['update_note', 'advance_note', 'delete_note'])
+    ...mapActions(['update_note', 'delete_note']),
+
+    advance_note (note) {
+      note.kind = this.note_kinds[note.kind].next
+      this.update_note(note)
+    }
   }
 }
 </script>
