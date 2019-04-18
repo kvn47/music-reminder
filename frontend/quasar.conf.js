@@ -116,7 +116,7 @@ module.exports = function (ctx) {
         description: 'Music Reminder',
         display: 'standalone',
         orientation: 'portrait',
-        background_color: '#ffffff',
+        background_color: '#52a8ec',
         theme_color: '#027be3',
         icons: [
           {
