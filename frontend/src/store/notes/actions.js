@@ -42,10 +42,10 @@ export function update_note ({ commit }, note) {
   return notes_collection.doc(note.id).set(note) // .then(() => commit('replace_note', note))
 }
 
-export function delete_note ({ commit }, id) {
-  // return API.delete(id).then(id => commit('remove_note', id))
+export function delete_note ({ commit }, note) {
+  // return API.delete(note.id).then(id => commit('remove_note', id))
 
-  return notes_collection.doc(id).delete() // .then(() => commit('remove_note', id))
+  return notes_collection.doc(note.id).delete() // .then(() => commit('remove_note', id))
 }
 
 function build_note (doc) {
