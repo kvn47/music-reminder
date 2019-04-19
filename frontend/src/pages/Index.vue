@@ -141,7 +141,8 @@ export default {
     ...mapActions(['fetch_notes', 'create_note', 'update_note']),
 
     add_note (kind) {
-      this.active_note = { kind: kind }
+      this.active_note = { kind: kind, artist: '', album: '' }
+      if (kind === 'await') { this.active_note.release_date = new Date() }
       this.show_form()
     },
 

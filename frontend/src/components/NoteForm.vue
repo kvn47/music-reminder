@@ -51,7 +51,7 @@
       >
         <template v-slot:append>
           <q-icon name="fas fa-calendar" class="cursor-pointer">
-            <q-popup-proxy>
+            <q-popup-proxy ref="date_picker_popup">
               <q-date
                 :value="release_date_for_picker"
                 @input="set_release_date"
@@ -144,6 +144,7 @@ export default {
 
     set_release_date (value) {
       this.note.release_date = new Date(value)
+      this.$refs.date_picker_popup.hide()
     },
 
     submit_form () {
