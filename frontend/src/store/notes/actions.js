@@ -51,5 +51,8 @@ export function delete_note ({ commit }, note) {
 function build_note (doc) {
   const note = doc.data()
   note.id = doc.id
+  if (note.release_date !== undefined) {
+    note.release_date = note.release_date.toDate()
+  }
   return note
 }

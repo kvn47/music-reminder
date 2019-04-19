@@ -7,7 +7,9 @@ export function note_kinds_array (state) {
 }
 
 export const notes_of_kind = (state) => (kind) => {
-  return state.notes.filter(note => note.kind === kind)
+  let notes = state.notes.filter(note => note.kind === kind)
+  if (kind === 'await') { notes = notes.sort((n1, n2) => n1.release_date - n2.release_date) }
+  return notes
 }
 
 export const search_notes = (state) => (str) => {

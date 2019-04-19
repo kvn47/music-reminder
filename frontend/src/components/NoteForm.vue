@@ -28,20 +28,36 @@
         clearable
       />
 
+<!--      <template v-if="is_release_date_visible">-->
+<!--        <div class="release_date">-->
+<!--          {{ note.release_date }}-->
+<!--        </div>-->
+<!--        <q-icon name="fas fa-calendar" class="cursor-pointer">-->
+<!--          <q-popup-proxy>-->
+<!--            <q-date-->
+<!--              v-model="note.release_date"-->
+<!--              :first-day-of-week="1"-->
+<!--              label="Release date"-->
+<!--              minimal-->
+<!--            />-->
+<!--          </q-popup-proxy>-->
+<!--        </q-icon>-->
+<!--      </template>-->
+
       <q-input
         v-if="is_release_date_visible"
-        v-model="note.release_date"
+        :value="release_date_for_input"
         label="Release date"
-        mask="date"
-        :rules="['date']"
       >
         <template v-slot:append>
           <q-icon name="fas fa-calendar" class="cursor-pointer">
             <q-popup-proxy>
               <q-date
-                v-model="note.release_date"
+                :value="release_date_for_picker"
+                @input="set_release_date"
                 :first-day-of-week="1"
                 label="Release date"
+                today-btn
               />
             </q-popup-proxy>
           </q-icon>
@@ -63,6 +79,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { date } from 'quasar'
 // import API from 'api/artists'
 
 export default {
@@ -90,12 +107,6 @@ export default {
       } else {
         return []
       }
-
-      // let options = []
-      // for (const kind of Object.entries(this.note_kinds)) {
-      //   options.push({label: kind[1].title, value: kind[0]})
-      // }
-      // return options
     },
 
     is_download_url_visible () {
@@ -108,6 +119,14 @@ export default {
 
     is_release_date_visible () {
       return this.note.kind === 'await'
+    },
+
+    release_date_for_input () {
+      return this.note.release_date.toLocaleDateString()
+    },
+
+    release_date_for_picker () {
+      return date.formatDate(this.note.release_date, 'YYYY/MM/DD')
     }
   },
 
@@ -122,6 +141,10 @@ export default {
     //       done(result)
     //     })
     // },
+
+    set_release_date (value) {
+      this.note.release_date = new Date(value)
+    },
 
     submit_form () {
       this.$emit('submit-form', this.note)

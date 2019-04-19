@@ -1,7 +1,14 @@
 <template>
   <q-list no-border>
     <template v-for="note in notes">
-      <q-expansion-item :label="note_label(note)" :key="note.id" expand-icon="fas fa-angle-down" group="notes" popup>
+      <q-expansion-item
+        :key="note.id"
+        group="notes"
+        :label="note_label(note)"
+        :caption="note_caption(note)"
+        expand-icon="fas fa-angle-down"
+        popup
+      >
         <note-card :note="note"/>
       </q-expansion-item>
     </template>
@@ -24,7 +31,15 @@ export default {
   },
 
   methods: {
-    note_label (note) { return [note.artist, note.album].join(' - ') }
+    note_label (note) { return [note.artist, note.album].join(' - ') },
+
+    note_caption (note) {
+      if (note.kind === 'await') {
+        return note.release_date.toLocaleDateString()
+      } else {
+        return ''
+      }
+    }
   }
 }
 </script>

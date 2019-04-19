@@ -1,6 +1,8 @@
 .quasar
+.firebase
 node_modules
 /dist
+/src/api/firebase_config.js
 /src-cordova/node_modules
 /src-cordova/platforms
 /src-cordova/plugins
