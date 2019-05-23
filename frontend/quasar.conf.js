@@ -66,7 +66,7 @@ module.exports = function (ctx) {
 
       // iconSet: 'ionicons-v4'
       iconSet: 'fontawesome-v5',
-      // lang: 'ru' // Quasar language
+      lang: 'ru' // Quasar language
     },
 
     supportIE: false,
@@ -97,7 +97,7 @@ module.exports = function (ctx) {
     devServer: {
       // https: true,
       // port: 8080,
-      open: true // opens browser window automatically
+      // open: true // opens browser window automatically
     },
 
     // animations: 'all' --- includes all animations

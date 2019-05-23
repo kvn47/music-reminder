@@ -28,22 +28,6 @@
         clearable
       />
 
-<!--      <template v-if="is_release_date_visible">-->
-<!--        <div class="release_date">-->
-<!--          {{ note.release_date }}-->
-<!--        </div>-->
-<!--        <q-icon name="fas fa-calendar" class="cursor-pointer">-->
-<!--          <q-popup-proxy>-->
-<!--            <q-date-->
-<!--              v-model="note.release_date"-->
-<!--              :first-day-of-week="1"-->
-<!--              label="Release date"-->
-<!--              minimal-->
-<!--            />-->
-<!--          </q-popup-proxy>-->
-<!--        </q-icon>-->
-<!--      </template>-->
-
       <q-input
         v-if="is_release_date_visible"
         :value="release_date_for_input"
@@ -122,7 +106,7 @@ export default {
     },
 
     release_date_for_input () {
-      return this.note.release_date.toLocaleDateString()
+      return this.note.release_date.toLocaleDateString('ru-RU')
     },
 
     release_date_for_picker () {

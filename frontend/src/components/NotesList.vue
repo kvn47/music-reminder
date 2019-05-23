@@ -35,7 +35,7 @@ export default {
 
     note_caption (note) {
       if (note.kind === 'await') {
-        return note.release_date.toLocaleDateString()
+        return note.release_date.toLocaleDateString('ru-RU')
       } else {
         return ''
       }
