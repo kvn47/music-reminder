@@ -1,6 +1,6 @@
 {
   "name": "music-reminder",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Music Reminder",
   "productName": "Music Reminder",
   "cordovaId": "org.cordova.quasar.app",
