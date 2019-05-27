@@ -4,8 +4,8 @@
       <q-expansion-item
         :key="note.id"
         group="notes"
-        :label="note_label(note)"
-        :caption="note_caption(note)"
+        :label="label(note)"
+        :caption="caption(note)"
         expand-icon="fas fa-angle-down"
         popup
       >
@@ -17,6 +17,7 @@
 
 <script>
 import NoteCard from 'components/NoteCard'
+import { note_label } from 'lib/note'
 
 export default {
   name: 'NotesList',
@@ -31,9 +32,9 @@ export default {
   },
 
   methods: {
-    note_label (note) { return [note.artist, note.album].join(' - ') },
+    label (note) { return note_label(note) },
 
-    note_caption (note) {
+    caption (note) {
       if (note.kind === 'await') {
         return note.release_date.toLocaleDateString('ru-RU')
       } else {
