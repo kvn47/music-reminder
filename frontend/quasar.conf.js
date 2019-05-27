@@ -36,6 +36,7 @@ module.exports = function (ctx) {
         'QExpansionItem',
         'QFab',
         'QFabAction',
+        'QField',
         'QIcon',
         'QInput',
         'QItem',

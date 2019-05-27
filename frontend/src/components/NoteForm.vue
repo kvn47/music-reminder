@@ -28,11 +28,15 @@
         clearable
       />
 
-      <q-input
+      <q-field
         v-if="is_release_date_visible"
-        :value="release_date_for_input"
         label="Release date"
+        stack-label
       >
+        <template v-slot:control>
+          <div class="self-center full-width no-outline" tabindex="0">{{ release_date_preview }}</div>
+        </template>
+
         <template v-slot:append>
           <q-icon name="fas fa-calendar" class="cursor-pointer">
             <q-popup-proxy ref="date_picker_popup">
@@ -46,7 +50,7 @@
             </q-popup-proxy>
           </q-icon>
         </template>
-      </q-input>
+      </q-field>
 
       <q-input v-model="note.details" type="textarea" rows="3" label="Details" clearable/>
     </q-card-section>
@@ -105,7 +109,7 @@ export default {
       return this.note.kind === 'await'
     },
 
-    release_date_for_input () {
+    release_date_preview () {
       return this.note.release_date.toLocaleDateString('ru-RU')
     },
 
