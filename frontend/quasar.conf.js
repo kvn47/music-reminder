@@ -27,6 +27,7 @@ module.exports = function (ctx) {
 
       components: [
         'QBtn',
+        'QBtnDropdown',
         'QBtnToggle',
         'QCard',
         'QCardSection',
@@ -40,6 +41,7 @@ module.exports = function (ctx) {
         'QIcon',
         'QInput',
         'QItem',
+        'QItemLabel',
         'QItemSection',
         'QLayout',
         'QList',
