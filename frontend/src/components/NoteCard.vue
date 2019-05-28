@@ -1,14 +1,14 @@
 <template>
   <q-card flat>
-    <q-card-section>
-      {{note.details}}
+    <q-card-section v-if="note.details">
+      {{ note.details }}
     </q-card-section>
     <q-separator/>
     <q-card-actions align="around">
-      <q-btn @click="search_album(note)" icon="fas fa-search" color="info" flat/>
-      <q-btn @click="copy_label(note)" icon="far fa-copy" color="secondary" flat/>
+      <q-btn @click="search_album()" icon="fas fa-search" color="info" flat/>
+      <q-btn @click="copy_label()" icon="far fa-copy" color="secondary" flat/>
       <q-btn @click="edit_note(note)" icon="fas fa-edit" color="secondary" flat/>
-      <q-btn @click="advance_note(note)" :icon="next_kind.icon" :color="next_kind.color" flat/>
+      <q-btn @click="advance_note()" :icon="next_kind.icon" :color="next_kind.color" flat/>
       <q-btn @click="delete_note(note)" icon="fas fa-trash" color="negative" flat/>
     </q-card-actions>
   </q-card>
@@ -25,7 +25,7 @@ export default {
   props: {
     note: {
       type: Object,
-      default () { return {} }
+      default () { return Object.new }
     }
   },
 
@@ -59,9 +59,9 @@ export default {
       window.open('https://www.google.ru/search?q=' + note_label(this.note))
     },
 
-    advance_note (note) {
-      note.kind = this.note_kinds[note.kind].next
-      this.update_note(note)
+    advance_note () {
+      this.note.kind = this.note_kinds[this.note.kind].next
+      this.update_note(this.note)
     }
   }
 }
