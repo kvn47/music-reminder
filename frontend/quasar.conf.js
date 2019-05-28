@@ -114,7 +114,7 @@ module.exports = function (ctx) {
       // workboxOptions: {},
       manifest: {
         name: 'Music Reminder',
-        short_name: 'Music Notes',
+        short_name: 'Music Reminder',
         description: 'Music Reminder',
         display: 'standalone',
         orientation: 'any',
