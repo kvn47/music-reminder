@@ -1,68 +1,72 @@
 <template>
-  <q-card>
-    <!--<form @submit.prevent="submit_form">-->
-    <q-card-section>
-      <q-btn-toggle v-model="note.kind" :options="kind_options" flat/>
+  <form @submit.prevent="submit_form">
+    <q-card>
+      <q-card-section>
+        <q-btn-toggle v-model="note.kind" :options="kind_options" flat/>
 
-      <q-input v-model="note.artist" type="text" label="Artist" autofocus clearable>
-        <!--<q-autocomplete-->
-          <!--@search="search_artist"-->
-        <!--/>-->
-      </q-input>
+        <q-input v-model="note.artist" type="text" label="Artist" autofocus clearable>
+          <!--<q-autocomplete-->
+            <!--@search="search_artist"-->
+          <!--/>-->
+        </q-input>
 
-      <q-input v-model="note.album" type="text" label="Album" clearable/>
+        <q-input v-model="note.album" type="text" label="Album" clearable/>
 
-      <q-input
-        v-if="is_download_url_visible"
-        v-model="note.download_url"
-        type="url"
-        label="Download URL"
-        clearable
-      />
+        <q-input
+          v-if="is_download_url_visible"
+          v-model="note.download_url"
+          type="url"
+          label="Download URL"
+          clearable
+        />
 
-      <q-input
-        v-if="is_download_path_visible"
-        v-model="note.download_path"
-        type="text"
-        label="Download path"
-        clearable
-      />
+        <q-input
+          v-if="is_download_path_visible"
+          v-model="note.download_path"
+          type="text"
+          label="Download path"
+          clearable
+        />
 
-      <q-field
-        v-if="is_release_date_visible"
-        label="Release date"
-        stack-label
-      >
-        <template v-slot:control>
-          <div class="self-center full-width no-outline" tabindex="0">{{ release_date_preview }}</div>
-        </template>
+        <q-field
+          v-if="is_release_date_visible"
+          label="Release date"
+          stack-label
+        >
+          <template v-slot:control>
+            <div class="self-center full-width no-outline" tabindex="0">{{ release_date_preview }}</div>
+          </template>
 
-        <template v-slot:append>
-          <q-icon name="fas fa-calendar" class="cursor-pointer">
-            <q-popup-proxy ref="date_picker_popup">
-              <q-date
-                :value="release_date_for_picker"
-                @input="set_release_date"
-                :first-day-of-week="1"
-                label="Release date"
-                today-btn
-              />
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-      </q-field>
+          <template v-slot:append>
+            <q-icon name="fas fa-calendar" class="cursor-pointer">
+              <q-popup-proxy ref="date_picker_popup">
+                <q-date
+                  :value="release_date_for_picker"
+                  @input="set_release_date"
+                  :first-day-of-week="1"
+                  label="Release date"
+                  today-btn
+                />
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-field>
 
-      <q-input v-model="note.details" type="textarea" rows="3" label="Details" clearable/>
-    </q-card-section>
+        <q-input v-model="note.details" type="textarea" rows="3" label="Details" clearable/>
+      </q-card-section>
 
-    <q-separator/>
+      <q-separator/>
 
-    <q-card-actions align="right">
-      <q-btn label="Cancel" v-close-popup></q-btn>
-      <q-btn label="Save" type="submit" @click="submit_form" color="primary" :loading="is_saving"/>
-    </q-card-actions>
-    <!--</form>-->
-  </q-card>
+      <q-card-actions align="around">
+        <q-btn label="Cancel" v-close-popup class="col-5" />
+        <q-btn @click="submit_form" label="Save" type="submit" color="primary" :loading="submitting" class="col-5">
+          <template v-slot:loading>
+            <q-spinner-bars/>
+          </template>
+        </q-btn>
+      </q-card-actions>
+    </q-card>
+  </form>
 </template>
 
 <script>
@@ -82,7 +86,7 @@ export default {
 
   data () {
     return {
-      is_saving: false
+      submitting: false
     }
   },
 
